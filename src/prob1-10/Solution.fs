@@ -2,21 +2,19 @@
 
 let rec myLast lst =
     match lst with
-    | [x] -> x
-    | hd :: tl -> myLast tl
     | [] -> failwith "Empty array"
+    | [ x ] -> x
+    | hd :: tl -> myLast tl
 
 let rec myButLast lst =
     match lst with
-    | [] | [_] -> failwith "Not enough elements"
-    | [x; _] -> x
-    | hd :: tl -> myButLast tl
+    | []
+    | [ _ ] -> failwith "Not enough elements"
+    | [ x; _ ] -> x
+    | _ :: tl -> myButLast tl
 
 let rec elementAt lst idx =
-    if idx = 1 then
-        List.head lst
-    else
-        elementAt (List.tail lst) (idx-1)
+    if idx = 1 then List.head lst else elementAt (List.tail lst) (idx - 1)
 
 let rec myLength lst =
     match lst with
@@ -25,3 +23,12 @@ let rec myLength lst =
 
 let reverse = List.rev
 
+let isPalindrome lst = lst = (reverse lst)
+
+type 'a NestedList = List of 'a NestedList list | Elem of 'a
+
+let flatten lst =
+    let rec flatten_aux acc = function
+        | Elem x -> x :: acc
+        | List inner -> List.foldBack (fun x acc -> flatten_aux acc x) inner acc
+    flatten_aux [] lst
