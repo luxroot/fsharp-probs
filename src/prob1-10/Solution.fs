@@ -4,7 +4,7 @@ let rec myLast lst =
     match lst with
     | [] -> failwith "Empty array"
     | [ x ] -> x
-    | hd :: tl -> myLast tl
+    | _ :: tl -> myLast tl
 
 let rec myButLast lst =
     match lst with
