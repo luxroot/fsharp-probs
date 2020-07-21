@@ -25,10 +25,30 @@ let reverse = List.rev
 
 let isPalindrome lst = lst = (reverse lst)
 
-type 'a NestedList = List of 'a NestedList list | Elem of 'a
+type 'a NestedList =
+    | List of 'a NestedList list
+    | Elem of 'a
 
 let flatten lst =
-    let rec flatten_aux acc = function
+    let rec flatten_aux acc =
+        function
         | Elem x -> x :: acc
         | List inner -> List.foldBack (fun x acc -> flatten_aux acc x) inner acc
     flatten_aux [] lst
+
+let compress lst =
+    List.foldBack (fun x acc ->
+        if List.isEmpty acc then [ x ]
+        elif List.head acc = x then acc
+        else x :: acc) lst []
+    
+let pack lst =
+    List.foldBack (fun x acc ->
+        if List.isEmpty acc then [ [ x ] ]
+        else
+        let firstList = List.head acc
+        if List.head firstList = x then (x::firstList)::(List.tail acc)
+        else [ x ] :: acc) lst []
+    
+let encode lst =
+    lst |> pack |> (List.map (fun x -> (List.length x, List.head x)))
