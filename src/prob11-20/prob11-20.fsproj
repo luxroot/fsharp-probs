@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>prob11_20</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Solution.fs" />
+  </ItemGroup>
+
+</Project>
