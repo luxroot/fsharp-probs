@@ -34,6 +34,7 @@ let flatten lst =
         function
         | Elem x -> x :: acc
         | List inner -> List.foldBack (fun x acc -> flatten_aux acc x) inner acc
+
     flatten_aux [] lst
 
 let compress lst =
@@ -41,14 +42,16 @@ let compress lst =
         if List.isEmpty acc then [ x ]
         elif List.head acc = x then acc
         else x :: acc) lst []
-    
+
 let pack lst =
     List.foldBack (fun x acc ->
-        if List.isEmpty acc then [ [ x ] ]
+        if List.isEmpty acc then
+            [ [ x ] ]
         else
-        let firstList = List.head acc
-        if List.head firstList = x then (x::firstList)::(List.tail acc)
-        else [ x ] :: acc) lst []
-    
+            let firstList = List.head acc
+            if List.head firstList = x then (x :: firstList) :: (List.tail acc) else [ x ] :: acc) lst []
+
 let encode lst =
-    lst |> pack |> (List.map (fun x -> (List.length x, List.head x)))
+    lst
+    |> pack
+    |> (List.map (fun x -> (List.length x, List.head x)))
