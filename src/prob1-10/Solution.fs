@@ -1,4 +1,4 @@
-﻿module prob1_10
+﻿module ProblemFirst
 
 let rec myLast lst =
     match lst with
@@ -30,12 +30,12 @@ type 'a NestedList =
     | Elem of 'a
 
 let flatten lst =
-    let rec flatten_aux acc =
+    let rec flattenAux acc =
         function
         | Elem x -> x :: acc
-        | List inner -> List.foldBack (fun x acc -> flatten_aux acc x) inner acc
+        | List inner -> List.foldBack (fun x acc -> flattenAux acc x) inner acc
 
-    flatten_aux [] lst
+    flattenAux [] lst
 
 let compress lst =
     List.foldBack (fun x acc ->
